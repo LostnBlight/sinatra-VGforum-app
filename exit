@@ -1,0 +1,25 @@
+[1mdiff --git a/app/models/complaint.rb b/app/models/complaint.rb[m
+[1mindex 49c44ab..4936687 100644[m
+[1m--- a/app/models/complaint.rb[m
+[1m+++ b/app/models/complaint.rb[m
+[36m@@ -1,5 +1,5 @@[m
+ class Complaint < ActiveRecord::Base[m
+ [m
+[31m-    belongs_to :users[m
+[32m+[m[32m    belongs_to :user[m
+ [m
+ end[m
+[1mdiff --git a/config.ru b/config.ru[m
+[1mindex d7127f0..d117aa7 100644[m
+[1m--- a/config.ru[m
+[1m+++ b/config.ru[m
+[36m@@ -5,7 +5,8 @@[m [mif ActiveRecord::Migrator.needs_migration?[m
+ end[m
+ [m
+ # PATCH and DELETE requests[m
+[31m-user Rack::MethodOverride[m
+[32m+[m[32muse Rack::MethodOverride[m
+ [m
+ # here is where I will mount otyher controllers with 'use'[m
+[32m+[m[32muse UsersController[m
+ run ApplicationController[m
