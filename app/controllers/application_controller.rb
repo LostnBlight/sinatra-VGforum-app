@@ -16,7 +16,6 @@ class ApplicationController < Sinatra::Base
   helpers do
 
     def logged_in?
-
       !!current_user # double bang
     end
 
@@ -25,6 +24,8 @@ class ApplicationController < Sinatra::Base
       # pretty sure this saves how many times the "current user" is called
       @current_user ||= User.find_by(id: session[:user_id])
     end
+  end
+
 
 
 end
