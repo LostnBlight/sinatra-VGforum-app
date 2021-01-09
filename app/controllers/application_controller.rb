@@ -13,4 +13,18 @@ class ApplicationController < Sinatra::Base
     erb :welcome
   end
 
+  helpers do
+
+    def logged_in?
+
+      !!current_user # double bang
+    end
+
+    def current_user
+      # find gives an error and we want it to give us nil so im using find_by
+      # pretty sure this saves how many times the "current user" is called
+      @current_user ||= User.find_by(id: session[:user_id])
+    end
+
+
 end

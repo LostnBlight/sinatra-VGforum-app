@@ -13,6 +13,7 @@ class UsersController < ApplicationController
         @user = User.find_by(email: params[:email])
         if @user.authenticate(params[:password])
             # success
+            puts session
             session[:user_id] = @user.id
 
             redirect "users/#{@user.id}" # interpulate
