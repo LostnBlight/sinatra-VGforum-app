@@ -1,0 +1,9 @@
+Edit page for complaints
+
+
+<form class="" action="/complaints/<%= @complaint.id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <label for="content">Complaint</label>
+    <textarea name="content" style="width:auto; height:auto;"><%= @complaint.content %></textarea>
+    <input type="submit" name="" value="Complain">
+</form>

@@ -21,14 +21,43 @@ class ComplaintsController < ApplicationController
     end
 
     get '/complaints/:id' do
-        @complaint = Complaint.find(params[:id])
+        set_complaint
         erb :'complaints/show'
     end
 
     get '/complaints/:id/edit' do
-        "Hello World"
+        set_complaint
+        if logged_in?
+            if @complaint.user == current_user
+                erb :'/complaints/edit'
+            else
+                redirect "users/#{current_user.id}"
+            end
+        else
+            redirect '/'
+        end
+    end
+
+    patch '/complaints/:id' do
+        set_complaint
+        if logged_in?
+            if @complaint.user == current_user
+
+                @complaint.update(content: params[:content])
+
+                redirect "/complaints/#{@complaint.id}"
+            else
+                redirect "users/#{current_user.id}"
+            end
+        else
+            redirect '/'
+        end
     end
 
 
+
+    def set_complaint
+        @complaint = Complaint.find(params[:id])
+    end
 
 end
