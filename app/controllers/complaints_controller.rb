@@ -5,4 +5,30 @@ class ComplaintsController < ApplicationController
         erb :'/complaints/new'
     end
 
+    post '/complaints' do
+        if !logged_in?
+            redirect '/'
+        end
+        
+
+
+        if params[:content] != ""
+            @complaint = Complaint.create(content: params[:content], user_id: current_user.id)
+            redirect "/complaints/#{@complaint.id}"
+        else
+            redirect '/complaints/new'
+        end
+    end
+
+    get '/complaints/:id' do
+        @complaint = Complaint.find(params[:id])
+        erb :'complaints/show'
+    end
+
+    get '/complaints/:id/edit' do
+        "Hello World"
+    end
+
+
+
 end
