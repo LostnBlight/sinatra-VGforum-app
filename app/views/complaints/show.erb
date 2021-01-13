@@ -1,6 +1,8 @@
 <p><%= @complaint.content %></p>
 
-Edit Link
-<a href="/complaints/<%= @complaint.id %>/edit">Edit Complaint</a>
+<% if authorized_to_edit?(@complaint) %>
+    <a href="/complaints/<%= @complaint.id %>/edit">Edit Complaint</a>
 
-Delete Link
+    Delete Link
+
+<% end %>

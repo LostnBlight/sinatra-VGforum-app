@@ -28,6 +28,10 @@ class ApplicationController < Sinatra::Base
       # pretty sure this saves how many times the "current user" is called
       @current_user ||= User.find_by(id: session[:user_id])
     end
+
+    def authorized_to_edit?(complaint)
+      complaint.user == current_user
+    end
     
   end
 

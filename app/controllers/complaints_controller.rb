@@ -1,6 +1,12 @@
 class ComplaintsController < ApplicationController
     #GOALS: be able to create a complaint for others to see and be able to choose the game you are complaining about!
 
+    get '/complaints' do
+        @complaints = Complaint.all
+        erb :'complaints/index'
+    end
+
+
     get '/complaints/new' do
         erb :'/complaints/new'
     end

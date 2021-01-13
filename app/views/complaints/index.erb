@@ -1,1 +1,10 @@
-index complaints
+INDEX PAGE
+
+<% @complaints.each do |complaint| %>
+    <h3><%= complaint.content %></h3>
+
+    <p><a href="/complaints/<%= complaint.id %>"><%= complaint.created_at %></a></p>
+
+    <p>Player: <%= complaint.user.name %></p>
+    <br><br>
+<% end %>
