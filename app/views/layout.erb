@@ -16,9 +16,11 @@
   <body>
 
     <div class="nav">
-      <a href="/logout">Logout</a>
-      <a href="/complaints">Complaints</a>
-      <a href="/complaints/new">Create Complaint</a>
+      <% if logged_in? %>
+        <a href="/logout">Logout</a>
+        <a href="/complaints">Complaints</a>
+        <a href="/complaints/new">Create Complaint</a>
+      <% end %>
     </div>
 
 

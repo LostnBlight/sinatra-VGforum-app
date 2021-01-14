@@ -47,7 +47,7 @@ class ComplaintsController < ApplicationController
     patch '/complaints/:id' do
         set_complaint
         if logged_in?
-            if @complaint.user == current_user
+            if @complaint.user == current_user && params[:content] != ""
 
                 @complaint.update(content: params[:content])
 
@@ -57,6 +57,16 @@ class ComplaintsController < ApplicationController
             end
         else
             redirect '/'
+        end
+    end
+
+    delete '/complaints/:id' do
+        set_complaint
+        if authorized_to_edit?(@complaint)
+            @complaint.destroy
+            redirect '/complaints'
+        else
+            redirect '/complaints'
         end
     end
 
