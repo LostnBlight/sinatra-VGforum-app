@@ -15,19 +15,23 @@
   </head>
   <body>
 
-    <div class="nav">
-      <% if logged_in? %>
-        <a href="/logout">Logout</a>
-        <a href="/complaints">Complaints</a>
-        <a href="/complaints/new">Create Complaint</a>
-      <% end %>
-    </div>
+    
 
 
-
+    
     <div class="wrapper">
 
+        <% if logged_in? %>
+          <a href="/logout">Logout</a>
+          <a href="/complaints">Complaints</a>
+          <a href="/complaints/new">Create Complaint</a>
+        <% end %>
+
         <%= yield %>
+        <% if flash[:message]%>
+          <br>
+          <h5 style="color:#FF0000"><%= flash[:message] %></h5>
+        <% end %>
 
       <footer class="branding">
         <small>&copy; 2021 <strong>SinatraVgforumApp</strong></small>

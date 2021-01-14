@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     post '/login' do
         # Do not forget the key (email)
         @user = User.find_by(email: params[:email])
-        if @user.authenticate(params[:password])
+        if @user && @user.authenticate(params[:password])
             # success
 
             #remember this is how we log someone in!!!
@@ -21,7 +21,8 @@ class UsersController < ApplicationController
             redirect "users/#{@user.id}" # interpulate
         else
             # false
-
+            flash[:message] = "Invalid Email or Password, please try again or signup."
+            redirect '/login'
         end
     end
 
