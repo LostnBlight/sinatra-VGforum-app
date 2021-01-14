@@ -28,9 +28,9 @@
         <% end %>
 
         <%= yield %>
-        <% if flash[:message]%>
+        <% if flash[:errors]%>
           <br>
-          <h5 style="color:#FF0000"><%= flash[:message] %></h5>
+          <h5 style="color:#FF0000"><%= flash[:errors] %></h5>
         <% end %>
 
       <footer class="branding">

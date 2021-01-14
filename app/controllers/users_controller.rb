@@ -21,7 +21,7 @@ class UsersController < ApplicationController
             redirect "users/#{@user.id}" # interpulate
         else
             # false
-            flash[:message] = "Invalid Email or Password, please try again or signup."
+            flash[:errors] = "Invalid Email or Password, please try again or signup."
             redirect '/login'
         end
     end
@@ -31,14 +31,17 @@ class UsersController < ApplicationController
     end
 
     post '/users' do
-        
-        if params[:name] != "" && params[:email] != "" && params[:password] != ""
+        # .create saves it as in .new doesn't
+        @user = User.new(params)
+        # if params[:name] != "" && params[:email] != "" && params[:password] != "" (this is used when using .create)
+
+        if @user.save
             #success
-            @user = User.create(params)
 
             redirect "users/#{@user.id}"
         else 
             #false
+            flash[:errors] = "#{@user.errors.full_messages.to_sentence}"
             redirect '/signup'
         end
     end

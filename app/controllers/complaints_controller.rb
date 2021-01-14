@@ -22,7 +22,7 @@ class ComplaintsController < ApplicationController
             @complaint = Complaint.create(content: params[:content], user_id: current_user.id)
             redirect "/complaints/#{@complaint.id}"
         else
-            flash[:message] = "Please add text to complaint."
+            flash[:errors] = "Please add text to complaint."
             redirect '/complaints/new'
         end
     end
@@ -54,7 +54,7 @@ class ComplaintsController < ApplicationController
 
                 redirect "/complaints/#{@complaint.id}"
             else
-                flash[:message] = "Cannot edit complaint as empty, you can always delete complaints"
+                flash[:errors] = "Cannot edit complaint as empty, you can always delete complaints."
                 redirect "/complaints/#{@complaint.id}"
             end
         else
