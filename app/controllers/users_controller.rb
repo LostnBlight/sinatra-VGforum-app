@@ -1,26 +1,23 @@
 class UsersController < ApplicationController
 
-    # GET and POST routes for login/signup
-    # GET route renders(displays) login/signup page
-    # POST is to create the session (receiving the login form, finding the user, loging in the user.)
+    
     get '/login' do
         erb :login
     end
 
-    # We want to be able to.. (find the user, verify user, log in the user, redirect user.)
+    
     post '/login' do
-        # Do not forget the key (email)
+        
         @user = User.find_by(email: params[:email])
         if @user && @user.authenticate(params[:password])
-            # success
+            
 
-            #remember this is how we log someone in!!!
+            
             session[:user_id] = @user.id 
 
             puts session
-            redirect "users/#{@user.id}" # interpulate
+            redirect "users/#{@user.id}"
         else
-            # false
             flash[:errors] = "Invalid Email or Password, please try again or signup."
             redirect '/login'
         end
