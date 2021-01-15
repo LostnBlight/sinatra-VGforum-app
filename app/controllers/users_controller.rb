@@ -31,16 +31,14 @@ class UsersController < ApplicationController
     end
 
     post '/users' do
-        # .create saves it as in .new doesn't
+        
         @user = User.new(params)
-        # if params[:name] != "" && params[:email] != "" && params[:password] != "" (this is used when using .create)
+        
 
         if @user.save
-            #success
 
             redirect "users/#{@user.id}"
         else 
-            #false
             flash[:errors] = "#{@user.errors.full_messages.to_sentence}"
             redirect '/signup'
         end
@@ -48,7 +46,8 @@ class UsersController < ApplicationController
 
     get '/users/:id' do
         @user = User.find_by(id: params[:id])
-        session[:user_id] = @user.id
+        redirect_if_not_logged_in
+
         erb :'users/show'
     end
 

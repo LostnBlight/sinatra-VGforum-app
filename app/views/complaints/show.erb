@@ -1,14 +1,3 @@
 <br><br>
 <p><%= @complaint.content %></p>
 
-<% if authorized_to_edit?(@complaint) %>
-    <a href="/complaints/<%= @complaint.id %>/edit">Edit Complaint</a>
-    <br><br><br>
-    <form class="" action="/complaints/<%= @complaint.id %>" method="post">
-
-        <input type="hidden" name="_method" value="DELETE">
-        <input type="submit" name="" value="Delete this complaint">
-
-    </form>
-
-<% end %>

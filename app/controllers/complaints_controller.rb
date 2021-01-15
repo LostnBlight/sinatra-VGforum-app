@@ -1,5 +1,4 @@
 class ComplaintsController < ApplicationController
-    #GOALS: be able to create a complaint for others to see and be able to choose the game you are complaining about!
 
     get '/complaints' do
         @complaints = Complaint.all
@@ -12,11 +11,7 @@ class ComplaintsController < ApplicationController
     end
 
     post '/complaints' do
-        if !logged_in?
-            redirect '/'
-        end
-        
-
+        redirect_if_not_logged_in
 
         if params[:content] != ""
             @complaint = Complaint.create(content: params[:content], user_id: current_user.id)
@@ -29,36 +24,34 @@ class ComplaintsController < ApplicationController
 
     get '/complaints/:id' do
         set_complaint
-        erb :'complaints/show'
+        if authorized_to_edit?(@complaint)
+            erb :'complaints/show_user'
+        else
+            erb :'complaints/show'
+        end
     end
 
     get '/complaints/:id/edit' do
         set_complaint
-        if logged_in?
-            if @complaint.user == current_user
-                erb :'/complaints/edit'
-            else
-                redirect "users/#{current_user.id}"
-            end
+        redirect_if_not_logged_in
+        if authorized_to_edit?(@complaint)
+            erb :'/complaints/edit'
         else
-            redirect '/'
+            redirect "users/#{current_user.id}"
         end
     end
 
     patch '/complaints/:id' do
         set_complaint
-        if logged_in?
-            if @complaint.user == current_user && params[:content] != ""
+        redirect_if_not_logged_in
+        if @complaint.user == current_user && params[:content] != ""
 
-                @complaint.update(content: params[:content])
+            @complaint.update(content: params[:content])
 
-                redirect "/complaints/#{@complaint.id}"
-            else
-                flash[:errors] = "Cannot edit complaint as empty, you can always delete complaints."
-                redirect "/complaints/#{@complaint.id}"
-            end
+            redirect "/complaints/#{@complaint.id}"
         else
-            redirect '/'
+            flash[:errors] = "Cannot edit complaint as empty, you can always delete complaints."
+            redirect "/complaints/#{@complaint.id}"
         end
     end
 
